@@ -1,0 +1,17 @@
+{% extends "base/layout.html" %}
+{% load static %}
+{% block title %}DocDrive App{% endblock %}
+{% block content %}    
+    {% load crispy_forms_tags %}
+    <div class="flex-grow-1 container-fluid d-flex justify-content-center align-items-center p-0">
+        <div class="container">
+            <div class="row d-flex justify-content-center">
+                <div class="col-4 text-secondary d-flex flex-column justify-content-center align-items-center"> 
+                    <img src="{% static 'img/archivos.png' %}" width="300">
+                    <p class="p-0 m-0 mt-5 fw-bold fs-5">DocDrive App</p>
+                    <p class="p-0 m-0">version: 0.1.0</p>
+                </div>
+            </div>            
+        </div>
+    </div>    
+{% endblock %}

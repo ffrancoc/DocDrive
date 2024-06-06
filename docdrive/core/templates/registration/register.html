@@ -1,0 +1,26 @@
+{% extends "base/layout.html" %}
+{% load static %}
+{% block title %}DocDrive App{% endblock %}
+{% block content %}    
+    {% load crispy_forms_tags %}
+    <div class="flex-grow-1 container-fluid d-flex justify-content-center align-items-center p-0">
+        <div class="container">
+            <div class="row d-flex justify-content-center">
+                <div class="col-4 bg-light p-0 rounded-3 overflow-hidden border text-secondary"> 
+                    <form method="POST">
+                        <div class="d-flex flex-column justify-content-center align-items-center" style="background: #eceff3 !important;">                            
+                            <p class="fs-1">Registrar</p>
+                        </div>
+                        <div class="p-4">
+                            {{ form | crispy }}
+                            {% csrf_token %}
+                            <div class="d-grid">
+                                <button type="submit" class="btn btn-primary">Crear cuenta</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>            
+        </div>
+    </div>    
+{% endblock %}

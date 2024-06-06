@@ -1,0 +1,70 @@
+{% extends "base/layout.html" %}
+{% load static %}
+{% block title %}DocDrive App{% endblock %}
+{% block content %}    
+    {% load crispy_forms_tags %}
+    <div class="flex-grow-1 container-fluid d-flex py-5">
+        <div class="container d-flex flex-column  border">
+            <div class="row border-bottom bg-light">
+                <div class="d-flex align-items-center gap-4">
+                    <div>
+                        <p class="m-0">Archivos</p>
+                        <p class="m-0"><i class="bi bi-file-earmark"></i> {{total_files}} </p>
+                    </div>
+                    <div>
+                        <p class="m-0">Imagenes</p>
+                        <p class="m-0"><i class="bi bi-card-image"></i> {{total_images}} </p>
+                    </div>
+                    <div class="flex-grow-1">
+                        <p class="m-0">Almacenamiento</p>
+                        <p class="m-0"><i class="bi bi-hdd"></i> {{ media_size }}</p>
+                    </div>
+                    <div>
+                        <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#uploadModal">Subir</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row p-2">                
+                {% for message in messages %}
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                {% endfor %}                
+            </div>
+
+            <div class="row overflow-scroll" style="height: 700px;">
+                <div class="container">
+                    <div class="row row-cols-auto gap-2 p-2 justify-content-center">
+                        {% for file in data %}
+                            {% include "partial/file-item.html" %}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>    
+
+    <!-- Modal -->
+    <div class="modal fade" id="uploadModal" tabindex="-1" aria-labelledby="uploadModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h1 class="modal-title fs-5" id="uploadModalLabel">Subir Archivo</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="modal-body">
+                    {{ form }}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                </div>
+            </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

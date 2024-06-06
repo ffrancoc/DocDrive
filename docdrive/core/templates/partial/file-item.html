@@ -1,0 +1,54 @@
+<div class="card d-flex flex-column bg-light text-center" style="width: 150px;height:100px;">
+    <a role="button" class="text-primary" data-bs-toggle="modal" data-bs-target="#fileInfoModal{{file.id}}">
+        <i class="bi bi-file-earmark-text-fill" style="font-size: 2rem;"></i>
+    </a>    
+    <p class="m-0 p-0" style="font-size: .7rem;">{{ file.title }}</p>
+    <p class="m-0 p-0" style="font-size: .7rem;">{{ file.file_size }} / {{ file.file_type }}</p>
+</div>
+
+<div class="modal fade" id="fileInfoModal{{file.id}}" tabindex="-1" aria-labelledby="fileInfoModalLabel{{file.id}}" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="fileInfoModalLabel{{file.id}}">{{ file.title }}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="d-flex flex-column gap-2">
+                    <div class="d-flex justify-content-center gap-3">
+                        <form action="{% url 'remove_file' %}" method='POST'>
+                            {% csrf_token %}
+                            <input name="file_id" value="{{file.id}}" hidden />
+                            <button type="submit" class="btn btn-sm btn-danger">
+                                <i class="bi bi-trash3-fill" style="font-size: 1rem;"></i> Eliminar
+                            </button>
+                        </form>
+
+                        <a href="{{ MEDIA_URL }}{{file.file}}" target="_blank" class="btn btn-primary  d-flex justify-content-center align-items-center gap-2"><i class="bi bi-cloud-arrow-down-fill" style="font-size: 1rem;"></i><span>Descargar</span></a>                        
+                    </div>
+                    <div class="mt-4">
+                        <h6>Compartir</h6>
+                        <div>
+                            <ul class="list-group">
+                                {% for user in users %}
+                                    <li class="list-group-item d-flex justify-content-between align-items-start">
+                                        <div class="me-auto">
+                                            <div class="fw-bold"><i class="bi bi-person-fill"></i> {{ user.username }}</div>                                    
+                                        </div>
+                                        <span>
+                                            <input class="form-check-input ms-auto" type="checkbox" value="" aria-label="...">
+                                        </span>
+                                    </li>                               
+                                {% endfor %}                                
+                            </ul>
+                        </div>
+                    </div>
+                </div>                
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
